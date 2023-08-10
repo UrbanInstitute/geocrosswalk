@@ -6,7 +6,7 @@ The purpose of this package is to allow researchers to easily crosswalk their da
 
 ### Convert Geographic Units
 
-![](img/geo-units.png)
+![]( img/geo-units.png | width=200 )
 
 Data available at the census block or tract levels can be aggregated up to any of the defined geographic units: 
 
@@ -23,7 +23,7 @@ list tables and data dictionaries here
 
 ### Harmonize Data Across Time
 
-![](img/geocrosswalk-overview.png)
+![](img/geocrosswalk-overview.png | width=400 )
 
 Explain challenges / problems solved to generate panel: 
 
