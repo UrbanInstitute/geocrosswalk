@@ -50,7 +50,7 @@ This function will attempt to guess the geographic vintage of data.They can also
 
 Proposed parameters are:
 
-- **.data**: `data.frame` or `tibble`.  `
+- **.data**: `data.frame` or `tibble`.  
 - **.geography**: `character` geographic level of data. Current options are in `geocrosswalk::standard_geos`.
 - **.geoid**: `character` specifying the variable name of the geographic ID to be checked.  
 - **.by**: `character` specifying the name of the variable to run this guess by (such as a year variable)
