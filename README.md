@@ -88,7 +88,7 @@ This function will attempt to estimate the amount of error introduced by the geo
 - **.geoid**: `character` specifying the geographic ID of the `.from` geometry. 
 - **.method**: `character` used to standardize data over time. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
 
-### `join_report`
+### `join_report()`
 This function will report on the join between the `.from` or `.year_from` geographies and the relevant crosswalk.  
 
 > **Usage Example**: A user would like to ascertain which geographic units would merge with the relevant crosswalk and which would not prior to using `convert_level()` or `standardize_time()`. If `.level_from` and `.level_to` are different, `.year_from` and `.year_to` cannot be different, and vice versa.  
