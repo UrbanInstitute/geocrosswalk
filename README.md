@@ -17,9 +17,9 @@ The package simplifies the process using a set of pre-built assets:
 <hr>
 <br>
 
-### Available Geographic Crosswalks
+### Harmonizing Data Across Geographic Levels
 
-Data available at the census block or tract levels can be aggregated up to any of the defined geographic levels ("geolevels"). 
+Data available at the census block or tract levels can be aggregated up to any of the geographic levels defined in the census geoid crosswalk files: 
 
 **[from block](https://nccsdata.s3.us-east-1.amazonaws.com/geo/xwalk_geoid/block_crosswalk.csv)**
 - Census Place
@@ -41,6 +41,8 @@ Data available at the census block or tract levels can be aggregated up to any o
 
 The data dictionary describing geolevels is available [HERE](geoid-crosswalk-dd.md). 
 
+<br>
+
 ### Harmonize Data Across Time
 
 Explain challenges / problems solved to generate panel: 
@@ -51,13 +53,17 @@ Explain challenges / problems solved to generate panel:
 
 **Count Apportionment**
 
+When the unit of measurement is counts of people, households, or similar things. 
+
 **Weighted Apportionment**
 
-Mentions methods? 
+When the unit of measurement is a ratio, median, or other non-linear mathematical transformation weighted apportionment will be more accurate. 
 
-Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
+Common features used to weight variables are things like age groups, race catgegories, sex, or levels of education. A weighted apportionment requires that variable of interest to be available in the facet version - broken out by each level of one of these categorical variables. 
 
+Mentions methods? Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
 
+<br>
 
 ### Geography Plus Time Conversions
 
