@@ -4,6 +4,34 @@ This memo outlines the proposed purpose and structure of the `geocrosswalk` pack
 
 The purpose of this package is to allow researchers to easily crosswalk their data from one geographic designation to another. Data can be transformed across geographic level for the same time period (e.g., census tract to census place), or transformed for the same geographic level across time (e.g. 2000 census tracts to 2010 census tracts).
 
+### Convert Geographic Units
+
+![](img/geo-units.png)
+
+Data available at the census block or tract levels can be aggregated up to any of the defined geographic units: 
+
+* counties
+* cities
+* places
+* metro regions
+* states
+* census regions
+* xx regions
+* urban / suburban / rural
+
+list tables and data dictionaries here
+
+### Harmonize Data Across Time
+
+![](img/geocrosswalk-overview.png)
+
+Explain challenges / problems solved to generate panel: 
+
+* draw from different data sources
+* variable name changes
+* apportionment to harmonize data to single geography
+
+
 ## Core Functions
 
 ### `convert_level()`
