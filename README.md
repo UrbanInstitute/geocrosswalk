@@ -16,8 +16,8 @@ The **convert_level** function will use crosswalks available publicly to approxi
 Proposed parameters are:
 
   - **.data**: `data.frame` or `tibble`. 
-  - **.from**: `character`specifying the geographic designation the data is currently in. See `geocrosswalk::supported_geos` for geographic options.
-  - **.to**: `character`specifying the geographic designation the data will be transformed to. See `geocrosswalk::supported_geos`  for geographic options.
+  - **.level_from**: `character`specifying the geographic designation the data is currently in. See `geocrosswalk::supported_geos` for geographic options.
+  - **.level_to**: `character`specifying the geographic designation the data will be transformed to. See `geocrosswalk::supported_geos`  for geographic options.
   - **.year**: `numeric` specifying the year of the geographic boundaries. Options include `1990`, `2000`, `2010`, and `2020`. 
   - **.weight**: `character` specifying what to use to represent the size of the intersection between `.from` and `.to` geographies. Options are `population`, `land areas`, and `housing units`. 
   - **.geoid**: `character` specifying the geographic ID of the `.from` geometry.
@@ -37,9 +37,9 @@ Proposed parameters are:
 
 - **.data**: `data.frame` or `tibble`.  
 - **.geography**: `character` geographic level of data. Current options are in `geocrosswalk::standard_geos`.
-- **.from**: `numeric` geographic vintage of the original data. Current options are 1990, 2000, 2010, and 2020. If no years or multiple years provided, will do a check to determine what vintage geoids are most likely in.
-- **.to**: `numeric` geographic vintage of the year you are standardizing to. 
-- **.geoid**: `character` specifying the geographic ID of the `.from` geometry.
+- **.year_from**: `numeric` geographic vintage of the original data. Current options are 1990, 2000, 2010, and 2020. If no years or multiple years provided, will do a check to determine what vintage geoids are most likely in.
+- **.year_to**: `numeric` geographic vintage of the year you are standardizing to. 
+- **.geoid**: `character` specifying the geographic ID of the `.year_from` geometry.
 - **.by**: `character` variable name of any variable by which the data is long by the geographic unit. For example, if a dataset is census tracts by year, we will want to create statitistics for each year. 
 - **.method**: `character` used to standardize data over time. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
 - **.count_variables**: `character` vector of variable names to adjust that represent `count` data. This represents any data that can be counted (e.g. 1 person, 2 people, ect.).
@@ -70,8 +70,8 @@ This function will attempt to recommend a methodology to standardize geographies
 
 Proposed parameters are:
 
-- **.geography_from**: `character` of geography to convert or standardize from. 
-- **.geography_to**:  `character` of geography to convert or standardize to.
+- **.level_from**: `character` of geography to convert or standardize from. 
+- **.level_to**:  `character` of geography to convert or standardize to.
 - **.year_from**: `character` of geography to convert or standardize from.
 - **.year_to**: `character` of geography to convert or standardize to.
 - **.data_sources**: `character` vector of unique data sources. Current options are "decennial" and "acs". 
@@ -81,9 +81,23 @@ This function will attempt to estimate the amount of error introduced by the geo
 
 > **Usage Example**: A user is attempting to ascertain how much error a specific geographic transformation will introduce in their estimates.
 
-- **.geography_from**: `character` of geography to convert or standardize from. 
-- **.geography_to**:  `character` of geography to convert or standardize to.
+- **.level_from**: `character` of geography to convert or standardize from. 
+- **.level_to**:  `character` of geography to convert or standardize to.
 - **.year_from**: `character` of geography to convert or standardize from.
 - **.year_to**: `character` of geography to convert or standardize to.
 - **.geoid**: `character` specifying the geographic ID of the `.from` geometry. 
 - **.method**: `character` used to standardize data over time. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
+
+### `join_report`
+This function will report on the join between the `.from` or `.year_from` geographies and the relevant crosswalk.  
+
+> **Usage Example**: A user would like to ascertain which geographic units would merge with the relevant crosswalk and which would not prior to using `convert_level` or `standardize_time`. If `.level_from` and `.level_to` are different, `.year_from` and `.year_to` cannot be different, and vice versa.  
+
+- **.data**: `data.frame` or `tibble`.
+- **.level_from**: `character` of geography to convert or standardize from. 
+- **.level_to**:  `character` of geography to convert or standardize to.
+- **.year_from**: `character` of geography to convert or standardize from.
+- **.year_to**: `character` of geography to convert or standardize to.
+- **.geoid**: `character` specifying the geographic ID of the `.from` geometry. 
+- **.method**: `character` used to standardize data over time. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
+
