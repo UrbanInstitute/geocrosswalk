@@ -1,47 +1,82 @@
-# geocrosswalk
+# The geocrosswalk R Package
 
-This memo outlines the proposed purpose and structure of the `geocrosswalk` package.
+This package allows researchers to easily crosswalk their data from one geographic designation and time period to another. 
 
-The purpose of this package is to allow researchers to easily crosswalk their data from one geographic designation to another. Data can be transformed across geographic level for the same time period (e.g., census tract to census place), or transformed for the same geographic level across time (e.g. 2000 census tracts to 2010 census tracts).
+Data can be transformed across geographic level for the same time period (e.g., census tract to census place), or transformed for the same geographic level across time (e.g. 2000 census tracts to 2010 census tracts).
 
-### Convert Geographic Units
+Full data panels can be created by specifying the desired geographic level, desired time periods, variables from a list of the ~25 most frequently used, and the time period that will serve as the baseline. The package will then conduct cross-time apportionment and geolevel conversions to generate a longitudinal dataset covering the specified period with data harmonized to the desired baseline year.
 
-<img src="img/geo-unit-conversion.png" alt="Nested Geographic Units" width="300">
+The package simplifies the process using a set of pre-built assets: 
 
-Data available at the census block or tract levels can be aggregated up to any of the defined geographic units: 
+* a variable name crosswalk table for the ~25 most useful census variables  
+* pre-built census tables at the block and tract levels for the specified variables all time periods (1990, 2000, 2005-today)
+* a set of geographic aggregations described in the geoid crosswalks
+* a set of over-time apportionment tables that allow for data coversion between time periods
 
-* counties
-* cities
-* places
-* metro regions
-* states
-* census regions
-* xx regions
-* urban / suburban / rural
+<br>
+<hr>
+<br>
 
-list tables and data dictionaries here
+### Available Geographic Crosswalks
+
+Data available at the census block or tract levels can be aggregated up to any of the defined geographic levels ("geolevels"). 
+
+**[from block](https://nccsdata.s3.us-east-1.amazonaws.com/geo/xwalk_geoid/block_crosswalk.csv)**
+- Census Place
+- Urban Areas
+- Voting Districts
+- ZCTAs
+- NCES Locales
+
+**[from tract](https://nccsdata.s3.us-east-1.amazonaws.com/geo/xwalk_geoid/tract_crosswalk.csv)**
+- Public Use Microdata Areas (PUMAs)
+- Core Based Statistical Areas (CBSAs)
+- Combined Statistical Areas (CSAs)
+- County
+- State
+- Woodard's Cutural Regions
+- American Communities Cultural Regions
+- Census Regions
+- Census Divisions
+
+The data dictionary describing geolevels is available [HERE](geoid-crosswalk-dd.md). 
 
 ### Harmonize Data Across Time
 
-<br>
-
-<img src="img/geocrosswalk-overview.png" alt="Crosswalk example" width="600">
-
-<br>
-
 Explain challenges / problems solved to generate panel: 
 
-* draw from different data sources
+* data drawn from different sources (dicennial vs acs)
 * variable name changes
-* apportionment to harmonize data to single geography
+* apportionment needed to harmonize data to single geography
 
+**Count Apportionment**
+
+**Weighted Apportionment**
+
+Mentions methods? 
+
+Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
+
+
+
+### Geography Plus Time Conversions
+
+If data is being converted from 2000 blocks to 2010 places there are two possible approaches: time conversion first or geolevel conversion first. 
+
+The package harmonizes data by first apportioning values over time, then aggregating up to the appropriate geolevel. This will result in less error than the alternative approach, geolevel first then apportionment over time. 
+
+<br>
+<hr>
+<br>
 
 ## Core Functions
 
-### `convert_level()`
+### `convert_geolevel()`
 
-The **convert_level()** function will use crosswalks available publicly to approximate data from one geographic level (in the same vintage) to another. 
-	
+The **convert_geolevel()** function will use crosswalks available publicly to approximate data from one geolevel (in the same vintage) to another. 
+
+<img src="img/geo-unit-conversion.png" alt="Nested Geographic Units" width="300">
+
 > **Usage Example**: A researcher has data at the Census Tract level that they would like to transform to the Census Place level. They would be able to use this function to transform their data. The input would be data at the 2010 tract level; the output would be data approximated at the 2010 place level.
 
 
@@ -58,10 +93,15 @@ Proposed parameters are:
   - **.non_count_variables**: `character` vector of variable names to adjust that represent non-count data. This could represent data that is a median or average for a particular geography, or any statistic that cannot be counted. 
   - **.non_count_weights**: `character` vector of variable names that represent `count` metrics that can be used to weight the `.non_count_variables` during geographic conversion. For example, if the statistic is `median_household_income`, the `.non_count_weights` could be `total_households_reporting_income`. Vector must be in the same order as `.non_count_variables`.
 
+<br>
+<hr>
+<br>
 
-### `standardize_time()`
+### `harmonize_by_time()`
 
-The **standardize_time()** function will use crosswalks available publicly to approximate data from the same geographic level to a different year of release. 
+The **harmonize_by_time()** function will use crosswalks available publicly to approximate data from the same geographic level to a different year of release. 
+
+<img src="img/geocrosswalk-overview.png" alt="Crosswalk example" width="600">
 
 > **Usage Example**: A researcher is doing a longitudinal analysis using data at the census tract level. The need to standardize their data over time as census tracts boundaries change. This function standardizes that data to reflect consistent boundaries over time. The input would be a census tract level dataset over time. The output would be that same dataset with standard boundaries over time.
 
@@ -77,6 +117,10 @@ Proposed parameters are:
 - **.count_variables**: `character` vector of variable names to adjust that represent `count` data. This represents any data that can be counted (e.g. 1 person, 2 people, ect.).
 - **.non_count_variables**: `character` vector of variable names to adjust that represent `non-count` data. This could represent data that is a median or average for a particular geography, or any statistic that cannot be counted. 
  - **.non_count_weights**: `character` vector of variable names that represent `count` metrics that can be used to weight the `non_count_variables` during geographic conversion. For example, if the statistic is `median_household_income`, the `.non_count_weight` could be `total_households_reporting_income`.
+
+<br>
+<hr>
+<br>
 
 ## Nice-to-have's
 
@@ -132,4 +176,20 @@ This function will report on the join between the `.from` or `.year_from` geogra
 - **.year_to**: `character` of geography to convert or standardize to.
 - **.geoid**: `character` specifying the geographic ID of the `.from` geometry. 
 - **.method**: `character` used to standardize data over time. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
+
+## Proposed Features
+
+**validate_vintage() function** 
+samples a couple dozen observations from the dataset for variable_x and compare to values returned from the API for the given geoids to confirm that the year produced by 
+guess_vintage() is correct
+
+**coverage_report() function** 
+
+give a geolevel, time period, and set of variable names and get a report on data coverage.
+
+| **VAR**      | **2000** | **2001** | **2002** | **2003** | **2004** | **2005** | **2006** | **2007** | **2008** |
+|:-------------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
+| **pop**       | X        | X        | X        | X        | X        | X        | X        | X        | X        |
+| **pov**       | X        | .        | .        | .        | .        | X        | X        | X        | X        |
+| **unempl**    | X        | .        | .        | .        | .        | X        | X        | X        | X        | 
 
