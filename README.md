@@ -21,14 +21,14 @@ The package simplifies the process using a set of pre-built assets:
 
 Data available at the census block or tract levels can be aggregated up to any of the geographic levels defined in the census geoid crosswalk files: 
 
-**[from block](https://nccsdata.s3.us-east-1.amazonaws.com/geo/xwalk_geoid/block_crosswalk.csv)**
+**[from block](https://nccsdata.s3.us-east-1.amazonaws.com/geo/xwalk_geoid/block_crosswalk.csv)** (11,078,297 rows=blocks, 636 MB)
 - Census Place
 - Urban Areas
 - Voting Districts
 - ZCTAs
 - NCES Locales
 
-**[from tract](https://nccsdata.s3.us-east-1.amazonaws.com/geo/xwalk_geoid/tract_crosswalk.csv)**
+**[from tract](https://nccsdata.s3.us-east-1.amazonaws.com/geo/xwalk_geoid/tract_crosswalk.csv)** (74,091 rows=tracts, 15 MB) 
 - Public Use Microdata Areas (PUMAs)
 - Core Based Statistical Areas (CBSAs)
 - Combined Statistical Areas (CSAs)
