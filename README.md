@@ -25,7 +25,7 @@ list tables and data dictionaries here
 
 <br>
 
-<img src="img/geocrosswalk-overview.png" alt="Crosswalk example" width="400">
+<img src="img/geocrosswalk-overview.png" alt="Crosswalk example" width="600">
 
 <br>
 
