@@ -6,9 +6,9 @@ The purpose of this package is to allow researchers to easily crosswalk their da
 
 ## Core Functions
 
-### `convert_level`
+### `convert_level()`
 
-The **convert_level** function will use crosswalks available publicly to approximate data from one geographic level (in the same vintage) to another. 
+The **convert_level()** function will use crosswalks available publicly to approximate data from one geographic level (in the same vintage) to another. 
 	
 > **Usage Example**: A researcher has data at the Census Tract level that they would like to transform to the Census Place level. They would be able to use this function to transform their data. The input would be data at the 2010 tract level; the output would be data approximated at the 2010 place level.
 
@@ -27,9 +27,9 @@ Proposed parameters are:
   - **.non_count_weights**: `character` vector of variable names that represent `count` metrics that can be used to weight the `.non_count_variables` during geographic conversion. For example, if the statistic is `median_household_income`, the `.non_count_weights` could be `total_households_reporting_income`. Vector must be in the same order as `.non_count_variables`.
 
 
-### `standardize_time`
+### `standardize_time()`
 
-The **standardize_time** function will use crosswalks available publicly to approximate data from the same geographic level to a different year of release. 
+The **standardize_time()** function will use crosswalks available publicly to approximate data from the same geographic level to a different year of release. 
 
 > **Usage Example**: A researcher is doing a longitudinal analysis using data at the census tract level. The need to standardize their data over time as census tracts boundaries change. This function standardizes that data to reflect consistent boundaries over time. The input would be a census tract level dataset over time. The output would be that same dataset with standard boundaries over time.
 
@@ -48,11 +48,11 @@ Proposed parameters are:
 
 ## Nice-to-have's
 
-### `guess_vintage`
+### `guess_vintage()`
 
 This function will attempt to guess the geographic vintage of data.They can also check if data is a specific geographic vintage and guess the vintage by another variable (such as year).
 
-> **Usage Example**: A researcher has data but is unclear about which geographic vintage the data is in. Will also be used internally as an input into the `standardize_time` function.
+> **Usage Example**: A researcher has data but is unclear about which geographic vintage the data is in. Will also be used internally as an input into the `standardize_time()` function.
 
 Proposed parameters are:
 
@@ -62,7 +62,7 @@ Proposed parameters are:
 - **.by**: `character` specifying the name of the variable to run this guess by (such as a year variable).
 - **.is_vintage**: `numeric` optional year to test if the data is a specific geographic vintage. 
 
-### `recommend_methodology`
+### `recommend_methodology()`
 
 This function will attempt to recommend a methodology to standardize geographies or covert geographic levels based on the data source and geographic levels and vintages. In general, data should be collected at the smallest geography possible before standardization in order to minimize error. 
 
@@ -76,7 +76,7 @@ Proposed parameters are:
 - **.year_to**: `character` of geography to convert or standardize to.
 - **.data_sources**: `character` vector of unique data sources. Current options are "decennial" and "acs". 
 
-### `estimate_error`
+### `estimate_error()`
 This function will attempt to estimate the amount of error introduced by the geographic approximation in the final estimate. Nested geographies in generally will have very little error; geographies where intersections are split will have more error.
 
 > **Usage Example**: A user is attempting to ascertain how much error a specific geographic transformation will introduce in their estimates.
@@ -91,7 +91,7 @@ This function will attempt to estimate the amount of error introduced by the geo
 ### `join_report`
 This function will report on the join between the `.from` or `.year_from` geographies and the relevant crosswalk.  
 
-> **Usage Example**: A user would like to ascertain which geographic units would merge with the relevant crosswalk and which would not prior to using `convert_level` or `standardize_time`. If `.level_from` and `.level_to` are different, `.year_from` and `.year_to` cannot be different, and vice versa.  
+> **Usage Example**: A user would like to ascertain which geographic units would merge with the relevant crosswalk and which would not prior to using `convert_level()` or `standardize_time()`. If `.level_from` and `.level_to` are different, `.year_from` and `.year_to` cannot be different, and vice versa.  
 
 - **.data**: `data.frame` or `tibble`.
 - **.level_from**: `character` of geography to convert or standardize from. 
