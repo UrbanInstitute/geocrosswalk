@@ -75,7 +75,7 @@ Proposed parameters are:
 - **.data_sources**: `character` vector of unique data sources. Current options are "decennial" and "acs". 
 
 ### estimate_error
-This function will attempt to estimate the amount of error introduced by the geographic approximation in the final estimate. Nested geographies in generally will have very little error; geographies where large populations are split will have more error.
+This function will attempt to estimate the amount of error introduced by the geographic approximation in the final estimate. Nested geographies in generally will have very little error; geographies where intersections are split will have more error.
 
 > **Usage Example**: A user is attempting to ascertain how much error a specific geographic transformation will introduce in their estimates.
 
