@@ -54,5 +54,6 @@ Proposed parameters are:
 - **.geography**: `character` geographic level of data. Current options are in `geocrosswalk::standard_geos`.
 - **.geoid**: `character` specifying the variable name of the geographic ID to be checked.  
 - **.by**: `character` specifying the name of the variable to run this guess by (such as a year variable).
+- **.is_vintage**: `numeric` optional year to test if the data is a specific geographic vintage. 
 
 
