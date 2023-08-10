@@ -19,7 +19,7 @@ Proposed parameters are:
   - **.year**: `numeric` specifying the year of the geographic boundaries. Options include `1990`, `2000`, `2010`, and `2020`. 
   - **.weight**: `character` specifying what to use to represent the size of the intersection between `.from` and `.to` geographies. Options are `population`, `land areas`, and `housing units`. 
   - **.geoid**: `character` specifying the geographic ID of the `.from` geometry. 
-  - **.count_variables**: `character` vector of variable names to adjust that represent `count` data. This represents any data that can be counted (e.g. 1 person, 2 people, ect.)
+  - **.count_variables**: `character` vector of variable names to adjust that represent `count` data. This represents any data that can be counted (e.g. 1 person, 2 people, ect.).
   - **.non_count_variables**: `character` vector of variable names to adjust that represent non-count data. This could represent data that is a median or average for a particular geography, or any statistic that cannot be counted. 
   - **.non_count_weights**: `character` vector of variable names that represent `count` metrics that can be used to weight the `.non_count_variables` during geographic conversion. For example, if the statistic is `median_household_income`, the `.non_count_weights` could be `total_households_reporting_income`. Vector must be in the same order as `.non_count_variables`.
 
@@ -32,13 +32,13 @@ The **standardize_time** function will use crosswalks available publicly to appr
 
 Proposed parameters are:
 
-- **.data**: `data.frame` or `tibble`.  `
+- **.data**: `data.frame` or `tibble`.  
 - **.geography**: `character` geographic level of data. Current options are in `geocrosswalk::standard_geos`.
 - **.from**: `numeric` geographic vintage of the original data. Current options are 1990, 2000, 2010, and 2020. If no years or multiple years provided, will do a check to determine what vintage geoids are most likely in.
 - **.to**: `numeric` geographic vintage of the year you are standardizing to. 
 - **.geoid**: `character` specifying the geographic ID of the `.from` geometry. 
 - **.method**: method used to standardize data. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
-- **.count_variables**: `character` vector of variable names to adjust that represent `count` data. This represents any data that can be counted (e.g. 1 person, 2 people, ect.)
+- **.count_variables**: `character` vector of variable names to adjust that represent `count` data. This represents any data that can be counted (e.g. 1 person, 2 people, ect.).
 - **.non_count_variables**: `character` vector of variable names to adjust that represent `non-count` data. This could represent data that is a median or average for a particular geography, or any statistic that cannot be counted. 
  - **.non_count_weights**: `character` vector of variable names that represent `count` metrics that can be used to weight the `non_count_variables` during geographic conversion. For example, if the statistic is `median_household_income`, the `.non_count_weight` could be `total_households_reporting_income`.
 
@@ -53,6 +53,6 @@ Proposed parameters are:
 - **.data**: `data.frame` or `tibble`.  
 - **.geography**: `character` geographic level of data. Current options are in `geocrosswalk::standard_geos`.
 - **.geoid**: `character` specifying the variable name of the geographic ID to be checked.  
-- **.by**: `character` specifying the name of the variable to run this guess by (such as a year variable)
+- **.by**: `character` specifying the name of the variable to run this guess by (such as a year variable).
 
 
