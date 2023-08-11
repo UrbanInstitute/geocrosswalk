@@ -57,3 +57,20 @@ Create a table of variable coverage.
 | **pov**    | X        |          |          |          |          | X        | X        | X        | X        |
 | **unempl** | X        |          |          |          |          | X        | X        | X        | X        |
 
+
+## tidy format of census vars ?
+
+notes from brainstorm:
+
+| **var**     | **year** | **mingeo** | **source** | **api**    | **varname** | **count** | **weight** | **default ** | 
+|:-----------:|:--------:|:----------:|:----------:|:----------:|:-----------:|:---------:|:----------:|:------------:|
+| **poverty** | 1990     | block      | dicennial  | nhgis      | xxx         | yes       |            | aggup        |     
+| **poverty** | 2000     | block      | dicennial  | tidycensus | xxx         | yes       |            | direct       |    
+| **poverty** | 2010     | block      | dicennial  | tidycensus | yyy         | yes       |            | aggup        |    
+| **poverty** | 2005     | tract      | acs        | tidycensus | zzz         | no        |            | aggup        |    
+| **poverty** | 2010     | tract      | acs        | tidycensus | zzz         | no        |            | aggup        |    
+| **poverty** | 2010     | tract      | dicennial  | nhgis      | yyy         | yes       |            | direct       |     
+| **poverty** | 2010     | tract      | dicennial  | tidycensus | aaa         | yes       |            | direct       |     
+| **poverty** | 2010     | zip        | dicennial  | tidycensus | aaa         | yes       |            | aggup        |   
+
+
