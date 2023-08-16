@@ -9,7 +9,7 @@ Pre-built Census data panels with data harmonized over time can be accessed by s
 The package simplifies the process using a set of pre-built assets: 
 
 * geographic level crosswalk files generated from Missouri Census Data Center's Geocorr tool
-* a set of over-time apportionment tables that allow for data coversion between time periods from IPUMS NHGIS and the Census Bureau
+* a set of over-time apportionment tables that allow for data conversion between time periods from IPUMS NHGIS and the Census Bureau
 * a variable name crosswalk table for the ~25 most useful census variables  
 * pre-built census tables at the block level (decennial) and block group level (5-year American Community Survey) 
 * geographic level crosswalk for nested geographies at the census block and census tract levels 
@@ -19,26 +19,29 @@ The package simplifies the process using a set of pre-built assets:
 <hr>
 <br>
 
-### Converting Data Across Geographic Levels
+## Converting Data Across Geographic Levels
 
 To convert data across geographic levels (e.g.; census tracts to census PUMAs), we need a geographic crosswalk. These crosswalks allow us to approximate data from one geographic level to another. 
 
 
-#### Non-nested Geographies
+### Non-nested Geographies
 Non-nested geographies are geographies that do not align spatially even upon aggregation. 
 
-<img src="img/non_nested_geos.png" alt="Non-nested Geographic Units" width="300">
+<img src="img/zcta_county_w_int_w_legend.png" alt="Non-nested Geographic Units" width="300">
 
 To approximate data at another geographic level using non-nested geographies, we need a **weight** that represents the portion of the original geography that intersects with the target geography. 
 We gather crosswalks with these weights from Missouri Census Data Center's Geocorr tool. 
 
+Generally, when using geographic crosswalks for geographies that *do not nest*, it is better to start with the smallest possible geographic unit of observation available. This is to reduce the amount of error created by splitting up the original data into parts.
 
-#### Nested Geographies
-Data that is nested are easier to aggregate as data at the original geography fully aligns with the target geogrpahy. 
 
-<img src="img/nested_geos.png" alt="Nested Geographic Units" width="300">
 
-Data available at the census block or tract levels can be aggregated up to any of the geographic levels defined in the census geoid crosswalk files: 
+### Nested Geographies
+Data that is nested are easier to aggregate as data are fully encompassed within one geography, without splitting the original geography.
+
+<img src="img/county_w_legend.png" alt="Nested Geographic Units" width="300">
+
+Data available at the census block or tract levels can be aggregated up to any of the geographic levels defined below in the nested crosswalk files. Note that these crosswalk files are especially helpful if you have data at the block or tract level already and would like to crosswalk to multiple geographic entities.  
 
 **[from block](https://nccsdata.s3.us-east-1.amazonaws.com/geo/xwalk_geoid/block_crosswalk.csv)** (11,078,297 rows=blocks, 636 MB)
 - Census Place
@@ -60,37 +63,41 @@ Data available at the census block or tract levels can be aggregated up to any o
 
 The data dictionary describing geolevels is available [HERE](geoid-crosswalk-dd.md). Data was pulled from a variety of sources.
 
-Note that census blocks are nested within census tracts, so blocks can be crosswalked to any of the geographies listed above. 
+Note that census blocks are nested within census tracts, so blocks can be converted to any of the geographies listed above. 
 
 <br>
 
-### Harmonize Data Across Time
+## Harmonize Data Across Time
 
-Explain challenges / problems solved to generate panel: 
+Geographies created by the census often change over times in terms of their geographic boundaries. This can be a challenge for researchers that would like to compare data from the same region over time.
 
-* data drawn from different sources (dicennial vs acs)
-* variable name changes
-* apportionment needed to harmonize data to single geography
+Therefore, we need crosswalks to approximate changes in geography over time. We gather this data from IPUMS NHGIS, the Census Bureau, and the Longitudinal Tract Database. 
 
-**Count Apportionment**
+Generally, geographic levels that change over time are **unnested**, in that there are some original geographies that do not fit evenly into the target geographies. When using geographic crosswalks for geographies that *do not nest*, it is better to start with the smallest possible geographic unit of observation available. This is to reduce the amount of error created by splitting up the original data into parts.
 
-When the unit of measurement is counts of people, households, or similar things. 
+Therefore, when using crosswalks to approximate Census data over time, it is better to start with the lowest geographies available for that data; for Decennial Censuses this is the block and for the American Community Survey this is the block group. 
 
-**Weighted Apportionment**
+Another challenge when harmonizing data across time for Census Decennial and American Community survey data is matching variable names over time in order to reference the same variable. We create a variable crosswalk over time for NHGIS and the Census API for the ~25 most commonly used variables in these datasets.
 
-When the unit of measurement is a ratio, median, or other non-linear mathematical transformation weighted apportionment will be more accurate. 
 
-Common features used to weight variables are things like age groups, race catgegories, sex, or levels of education. A weighted apportionment requires that variable of interest to be available in the facet version - broken out by each level of one of these categorical variables. 
+## Count Data
 
-Mentions methods? Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
+When the unit of measurement is counts of people, households, or similar things, it is much easier to convert data across geographic levels and over time. With count data, we can apportion the data by directly splitting it up into parts. 
+
+## Non-count Data
+
+When the unit of measurement is a ratio, median, or other non-linear mathematical transformation weighted apportionment will be more accurate. This in effect transforms the data so that it can be split into parts for the geographic transformation.
+
+Common features used to weight variables are variables that closely resemble the population that the ratio, median, or mathemtical transportation represent. For example, if a variable is median household income, we may use the number of households that have income as the weighted variable in order to most closely allocate median household income into parts, that is then aggregated to the final geography. 
+
 
 <br>
 
-### Geography Plus Time Conversions
+## Geography Plus Time Conversions
 
 If data is being converted from 2000 blocks to 2010 places there are two possible approaches: time conversion first or geolevel conversion first. 
 
-The package harmonizes data by first apportioning values over time, then aggregating up to the appropriate geolevel. This will result in less error than the alternative approach, geolevel first then apportionment over time. 
+The package harmonizes data by first apportioning values over time, then aggregating up to the appropriate geolevel. This will result in less error than the alternative approach, geolevel first then apportionment over time. This is because it is much better to split up smaller levels of geography than bigger ones, as this will introduce less error into the geographic transformation
 
 <br>
 <hr>
