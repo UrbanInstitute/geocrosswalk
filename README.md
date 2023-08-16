@@ -8,16 +8,35 @@ Pre-built Census data panels with data harmonized over time can be accessed by s
 
 The package simplifies the process using a set of pre-built assets: 
 
+* geographic level crosswalk files generated from Missouri Census Data Center's Geocorr tool
+* a set of over-time apportionment tables that allow for data coversion between time periods from IPUMS NHGIS and the Census Bureau
 * a variable name crosswalk table for the ~25 most useful census variables  
-* pre-built census tables at the block and tract levels for the specified variables all time periods (1990, 2000, 2005-today)
-* a set of geographic aggregations described in the geoid crosswalks
-* a set of over-time apportionment tables that allow for data coversion between time periods
+* pre-built census tables at the block level (decennial) and block group level (5-year American Community Survey) 
+* geographic level crosswalk for nested geographies at the census block and census tract levels 
+
 
 <br>
 <hr>
 <br>
 
-### Harmonizing Data Across Geographic Levels
+### Converting Data Across Geographic Levels
+
+To convert data across geographic levels (e.g.; census tracts to census PUMAs), we need a geographic crosswalk. These crosswalks allow us to approximate data from one geographic level to another. 
+
+
+#### Non-nested Geographies
+Non-nested geographies are geographies that do not align spatially even upon aggregation. 
+
+<img src="img/non_nested_geos.png" alt="Non-nested Geographic Units" width="300">
+
+To approximate data at another geographic level using non-nested geographies, we need a **weight** that represents the portion of the original geography that intersects with the target geography. 
+We gather crosswalks with these weights from Missouri Census Data Center's Geocorr tool. 
+
+
+#### Nested Geographies
+Data that is nested are easier to aggregate as data at the original geography fully aligns with the target geogrpahy. 
+
+<img src="img/nested_geos.png" alt="Nested Geographic Units" width="300">
 
 Data available at the census block or tract levels can be aggregated up to any of the geographic levels defined in the census geoid crosswalk files: 
 
@@ -39,7 +58,9 @@ Data available at the census block or tract levels can be aggregated up to any o
 - Census Regions
 - Census Divisions
 
-The data dictionary describing geolevels is available [HERE](geoid-crosswalk-dd.md). 
+The data dictionary describing geolevels is available [HERE](geoid-crosswalk-dd.md). Data was pulled from a variety of sources.
+
+Note that census blocks are nested within census tracts, so blocks can be crosswalked to any of the geographies listed above. 
 
 <br>
 
