@@ -4,7 +4,7 @@ This package allows researchers to easily crosswalk their data from one geograph
 
 Data can be transformed across geographic level for the same time period (e.g., census tract to census place), or transformed for the same geographic level across time (e.g. 2000 census tracts to 2010 census tracts).
 
-Full data panels can be created by specifying the desired geographic level, desired time periods, variables from a list of the ~25 most frequently used, and the time period that will serve as the baseline. The package will then conduct cross-time apportionment and geolevel conversions to generate a longitudinal dataset covering the specified period with data harmonized to the desired baseline year.
+Pre-built Census data panels with data harmonized over time can be accessed by specifying the desired geographic level, desired time periods, variables from a list of the ~25 most frequently used, and the geographic vintage to harmonize to. The package will then return a longitudinal dataset covering the specified period with data harmonized to the desired geographic vintage. 
 
 The package simplifies the process using a set of pre-built assets: 
 
