@@ -229,6 +229,22 @@ This function will report on the join between the `from` or `year_from` geograph
 
 Proposed output: `data.frame` or `tibble` identifying the geographies in the `level_from` column in the `year_from` geographic vintage that merged and didn't merge with the geographic crosswalk. If `variables` is specified, will also include a coverage report of missingness. If `.by` is specified, will include the report by each level of the `.by`.
 
+
+### `pull_table()`
+This function will provide Decennial Census and American Community Survey data for the ~25 most common census variables harmonized to a consistent geographic level over time. 
+
+> **Usage Example**: A user wants panel data over time for commonly used census metrics, such as median household income or unemployment. This data needs to be harmonized over time so that changes over time will reflect real changes and not different geographic definitions. 
+
+- **geography**: `character` of the desired geographic level of data. 
+- **geographic_vintage**: `numeric` year of geographic boundaries to harmonize to. Current options are 2010 and 2020. 
+- **variables**: `character` vector of variables to include. Default is all 25 commonly-used variables.
+- **years**: `numeric` vector of years to pull ACS or Decennial Census data. If 2010 or 2020 is included, must specify the `which` parameter.
+- **which**: `character` specifying which dataset to pull from for years 2010 or 2020. Options are "acs" or "decennial".
+- **sumfile**: `character` specifying, if ACS data is being pulled, which type of ACS pull to use. Options are "acs1" for one-year ACS and "acs5" for 5-year ACS
+- **method**: `character` used to standardize data over time. Current options are `ltdb`,`nhgis`, and `census` for tracts, `nhgis` and `census` for all other geographies.
+
+Proposed output: `data.frame` or `tibble` of harmonized Census data over time at specified geographic level. 
+
 ## Proposed Features
 
 **`validate_vintage()` function** 
@@ -236,7 +252,7 @@ This function samples a couple dozen observations from the decennial census or A
 
 **`coverage_report()` function** 
 
-This functino would report on data coverage across Decennial census and American Community Survey datasets given a geoographic level, years of data, and set of variable names.
+This function would report on data coverage across Decennial census and American Community Survey datasets given a geoographic level, years of data, and set of variable names.
 
 | **VAR**      | **2000** | **2001** | **2002** | **2003** | **2004** | **2005** | **2006** | **2007** | **2008** |
 |:-------------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
