@@ -27,7 +27,7 @@ To convert data across geographic levels (e.g.; census tracts to census PUMAs), 
 ### Non-nested Geographies
 Non-nested geographies are geographies that do not align spatially even upon aggregation. 
 
-<img src="img/zcta_county_w_int_w_legend.png" alt="Non-nested Geographic Units" width="300">
+<img src="img/zcta_county_w_int_w_legend.png" alt="Non-nested Geographic Units" width="600">
 
 To approximate data at another geographic level using non-nested geographies, we need a **weight** that represents the portion of the original geography that intersects with the target geography. 
 We gather crosswalks with these weights from Missouri Census Data Center's Geocorr tool. 
@@ -39,7 +39,7 @@ Generally, when using geographic crosswalks for geographies that *do not nest*, 
 ### Nested Geographies
 Data that is nested are easier to aggregate as data are fully encompassed within one geography, without splitting the original geography.
 
-<img src="img/county_w_legend.png" alt="Nested Geographic Units" width="300">
+<img src="img/county_w_legend.png" alt="Nested Geographic Units" width="600">
 
 Data available at the census block or tract levels can be aggregated up to any of the geographic levels defined below in the nested crosswalk files. Note that these crosswalk files are especially helpful if you have data at the block or tract level already and would like to crosswalk to multiple geographic entities.  
 
@@ -103,6 +103,7 @@ The package harmonizes data by first apportioning values over time, then aggrega
 <hr>
 <br>
 
+
 ## Core Functions
 
 ### `convert_geolevel()`
@@ -117,15 +118,17 @@ The **convert_geolevel()** function will use crosswalks available publicly to ap
 Proposed parameters are:
 
   - **.data**: `data.frame` or `tibble`. 
-  - **.level_from**: `character`specifying the geographic designation the data is currently in. See `geocrosswalk::supported_geos` for geographic options.
-  - **.level_to**: `character`specifying the geographic designation the data will be transformed to. See `geocrosswalk::supported_geos`  for geographic options.
+  - **level_from**: `character`specifying the geographic designation the data is currently in. See `geocrosswalk::supported_geos` for geographic options.
+  - **level_to**: `character`specifying the geographic designation the data will be transformed to. See `geocrosswalk::supported_geos`  for geographic options.
   - **.year**: `numeric` specifying the year of the geographic boundaries. Options include `1990`, `2000`, `2010`, and `2020`. 
-  - **.weight**: `character` specifying what to use to represent the size of the intersection between `.from` and `.to` geographies. Options are `population`, `land areas`, and `housing units`. 
-  - **.geoid**: `character` specifying the geographic ID of the `.from` geometry.
+  - **weight**: `character` specifying what to use to represent the size of the intersection between `level_from` and `level_to` geographies. Options are `population`, `land areas`, and `housing units`. 
+  - **geoid**: `character` specifying the geographic ID of the `.from` geometry.
   - **.by**: `character` variable name of any variable by which the data is long by the geographic unit. For example, if a dataset is census tracts by year, we will want to create statitistics for each year. 
-  - **.count_variables**: `character` vector of variable names to adjust that represent `count` data. This represents any data that can be counted (e.g. 1 person, 2 people, ect.).
-  - **.non_count_variables**: `character` vector of variable names to adjust that represent non-count data. This could represent data that is a median or average for a particular geography, or any statistic that cannot be counted. 
-  - **.non_count_weights**: `character` vector of variable names that represent `count` metrics that can be used to weight the `.non_count_variables` during geographic conversion. For example, if the statistic is `median_household_income`, the `.non_count_weights` could be `total_households_reporting_income`. Vector must be in the same order as `.non_count_variables`.
+  - **count_variables**: `character` vector of variable names to adjust that represent `count` data. This represents any data that can be counted (e.g. 1 person, 2 people, ect.).
+  - **non_count_variables**: `character` vector of variable names to adjust that represent non-count data. This could represent data that is a median or average for a particular geography, or any statistic that cannot be counted. 
+  - **non_count_weights**: `character` vector of variable names that represent `count` metrics that can be used to weight the `.non_count_variables` during geographic conversion. For example, if the statistic is `median_household_income`, the `non_count_weights` could be `total_households_reporting_income`. Vector must be in the same order as `non_count_variables`.
+
+Proposed output: `dataframe` or `tibble` of data at new geographic level
 
 <br>
 <hr>
@@ -135,22 +138,25 @@ Proposed parameters are:
 
 The **harmonize_by_time()** function will use crosswalks available publicly to approximate data from the same geographic level to a different year of release. 
 
-<img src="img/geocrosswalk-overview.png" alt="Crosswalk example" width="600">
+<img src="img/geocrosswalk-overview.png" alt="Crosswalk example" width="300">
 
 > **Usage Example**: A researcher is doing a longitudinal analysis using data at the census tract level. The need to standardize their data over time as census tracts boundaries change. This function standardizes that data to reflect consistent boundaries over time. The input would be a census tract level dataset over time. The output would be that same dataset with standard boundaries over time.
 
 Proposed parameters are:
 
 - **.data**: `data.frame` or `tibble`.  
-- **.geography**: `character` geographic level of data. Current options are in `geocrosswalk::standard_geos`.
-- **.year_from**: `numeric` geographic vintage of the original data. Current options are 1990, 2000, 2010, and 2020. If no years or multiple years provided, will do a check to determine what vintage geoids are most likely in.
-- **.year_to**: `numeric` geographic vintage of the year you are standardizing to. 
-- **.geoid**: `character` specifying the geographic ID of the `.year_from` geometry.
-- **.by**: `character` variable name of any variable by which the data is long by the geographic unit. For example, if a dataset is census tracts by year, we will want to create statitistics for each year. 
-- **.method**: `character` used to standardize data over time. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
-- **.count_variables**: `character` vector of variable names to adjust that represent `count` data. This represents any data that can be counted (e.g. 1 person, 2 people, ect.).
-- **.non_count_variables**: `character` vector of variable names to adjust that represent `non-count` data. This could represent data that is a median or average for a particular geography, or any statistic that cannot be counted. 
- - **.non_count_weights**: `character` vector of variable names that represent `count` metrics that can be used to weight the `non_count_variables` during geographic conversion. For example, if the statistic is `median_household_income`, the `.non_count_weight` could be `total_households_reporting_income`.
+- **geography**: `character` geographic level of data. Current options are in `geocrosswalk::standard_geos`.
+- **year_from**: `numeric` geographic vintage of the original data. Current options are 1990, 2000, 2010, and 2020. If no years or multiple years provided, will do a check to determine what vintage geoids are most likely in.
+- **year_to**: `numeric` geographic vintage of the year you are standardizing to. 
+- **geoid**: `character` specifying the geographic ID of the `year_from` geometry.
+- **.by**: `character` variable name of any variable by which the data is long by the geographic unit. For example, if a dataset is census tracts by year, we will want to create statistics for each year. 
+- **method**: `character` used to standardize data over time. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
+- **count_variables**: `character` vector of variable names to adjust that represent `count` data. This represents any data that can be counted (e.g. 1 person, 2 people, ect.).
+- **non_count_variables**: `character` vector of variable names to adjust that represent `non-count` data. This could represent data that is a median or average for a particular geography, or any statistic that cannot be counted. 
+ - **non_count_weights**: `character` vector of variable names that represent `count` metrics that can be used to weight the `non_count_variables` during geographic conversion. For example, if the statistic is `median_household_income`, the `.non_count_weight` could be `total_households_reporting_income`.
+
+
+Proposed output: `dataframe` or `tibble` of data harmonized to one specific geographic vintage.
 
 <br>
 <hr>
@@ -162,15 +168,17 @@ Proposed parameters are:
 
 This function will attempt to guess the geographic vintage of data.They can also check if data is a specific geographic vintage and guess the vintage by another variable (such as year).
 
-> **Usage Example**: A researcher has data but is unclear about which geographic vintage the data is in. Will also be used internally as an input into the `standardize_time()` function.
+> **Usage Example**: A researcher has data but is unclear about which geographic vintage the data is in. Will also be used internally as an input into the `harmonize_by_time()` function.
 
 Proposed parameters are:
 
 - **.data**: `data.frame` or `tibble`.  
-- **.geography**: `character` geographic level of data. Current options are in `geocrosswalk::standard_geos`.
-- **.geoid**: `character` specifying the variable name of the geographic ID to be checked.  
+- **geography**: `character` geographic level of data. Current options are in `geocrosswalk::standard_geos`.
+- **geoid**: `character` specifying the variable name of the geographic ID to be checked.  
 - **.by**: `character` specifying the name of the variable to run this guess by (such as a year variable).
-- **.is_vintage**: `numeric` optional year to test if the data is a specific geographic vintage. 
+- **is_vintage**: `numeric` optional year to test if the data is a specific geographic vintage. 
+
+Proposed output: If no `by` is specified, `numeric` value indicating best guess of the year of data. If `by` is specfied, a `data.frame` or `tibble` with the `.by` column and a second column identifying the guess of the numeric year for each `by` category. 
 
 ### `recommend_methodology()`
 
@@ -180,46 +188,55 @@ This function will attempt to recommend a methodology to standardize geographies
 
 Proposed parameters are:
 
-- **.level_from**: `character` of geography to convert or standardize from. 
-- **.level_to**:  `character` of geography to convert or standardize to.
-- **.year_from**: `character` of geography to convert or standardize from.
-- **.year_to**: `character` of geography to convert or standardize to.
-- **.data_sources**: `character` vector of unique data sources. Current options are "decennial" and "acs". 
+- **level_from**: `character` of geography to convert or standardize from. 
+- **level_to**:  `character` of geography to convert or standardize to.
+- **year_from**: `character` of geography to convert or standardize from.
+- **year_to**: `character` of geography to convert or standardize to.
+- **data_sources**: `character` vector of unique data sources. Current options are "decennial" and "acs". 
+
+Proposed output: `character` string identifying steps to take to transform data from one geography or year to another. 
+
 
 ### `estimate_error()`
 This function will attempt to estimate the amount of error introduced by the geographic approximation in the final estimate. Nested geographies in generally will have very little error; geographies where intersections are split will have more error.
 
 > **Usage Example**: A user is attempting to ascertain how much error a specific geographic transformation will introduce in their estimates.
 
-- **.level_from**: `character` of geography to convert or standardize from. 
-- **.level_to**:  `character` of geography to convert or standardize to.
-- **.year_from**: `character` of geography to convert or standardize from.
-- **.year_to**: `character` of geography to convert or standardize to.
-- **.geoid**: `character` specifying the geographic ID of the `.from` geometry. 
-- **.method**: `character` used to standardize data over time. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
+- **level_from**: `character` of geography to convert or standardize from. 
+- **level_to**:  `character` of geography to convert or standardize to.
+- **year_from**: `character` of geography to convert or standardize from.
+- **year_to**: `character` of geography to convert or standardize to.
+- **geoid**: `character` specifying the geographic ID of the `from` geometry. 
+- **method**: `character` used to standardize data over time. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
+
+Proposed output: `data.frame` or `tibble` with two columns; `geoid` at the `to` geography and a numeric vector between 0 and 1 identifying the level of error introduced through the approximation. 
 
 ### `join_report()`
-This function will report on the join between the `.from` or `.year_from` geographies and the relevant crosswalk.  
+This function will report on the join between the `from` or `year_from` geographies and the relevant crosswalk.  
 
-> **Usage Example**: A user would like to ascertain which geographic units would merge with the relevant crosswalk and which would not prior to using `convert_level()` or `standardize_time()`. If `.level_from` and `.level_to` are different, `.year_from` and `.year_to` cannot be different, and vice versa.  
+> **Usage Example**: A user would like to ascertain which geographic units would merge with the relevant crosswalk and which would not prior to using `convert_geolevel()` or `harmonize_by_time()`. If `level_from` and `level_to` are different, `year_from` and `year_to` cannot be different, and vice versa.  
 
 - **.data**: `data.frame` or `tibble`.
-- **.level_from**: `character` of geography to convert or standardize from. 
-- **.level_to**:  `character` of geography to convert or standardize to.
-- **.year_from**: `character` of geography to convert or standardize from.
-- **.year_to**: `character` of geography to convert or standardize to.
-- **.geoid**: `character` specifying the geographic ID of the `.from` geometry. 
-- **.method**: `character` used to standardize data over time. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
+- **level_from**: `character` of geography to convert or standardize from. 
+- **level_to**:  `character` of geography to convert or standardize to.
+- **year_from**: `character` of geography to convert or standardize from.
+- **year_to**: `character` of geography to convert or standardize to.
+- **.by: `character` optional specifying if report is done by a specific variable (such as year) 
+- **geoid**: `character` specifying the geographic ID of the `.from` geometry. 
+- **variables**: `character` optional specifying the variables to check missing values with  
+- **method**: `character` used to standardize data over time. Current options are `ltdb`, and `nhgis` for tracts, `nhgis` and `census` for all other geographies.
+- **collapsed**: `logical` if TRUE, returns the report at an aggregate level. If FALSE, returns the report by geoid.
+
+Proposed output: `data.frame` or `tibble` identifying the geographies in the `level_from` column in the `year_from` geographic vintage that merged and didn't merge with the geographic crosswalk. If `variables` is specified, will also include a coverage report of missingness. If `.by` is specified, will include the report by each level of the `.by`.
 
 ## Proposed Features
 
-**validate_vintage() function** 
-samples a couple dozen observations from the dataset for variable_x and compare to values returned from the API for the given geoids to confirm that the year produced by 
-guess_vintage() is correct
+**`validate_vintage()` function** 
+This function samples a couple dozen observations from the decennial census or American Community Survey for a specific variable and compare to values returned from the census API for the given geoids.
 
-**coverage_report() function** 
+**`coverage_report()` function** 
 
-give a geolevel, time period, and set of variable names and get a report on data coverage.
+This functino would report on data coverage across Decennial census and American Community Survey datasets given a geoographic level, years of data, and set of variable names.
 
 | **VAR**      | **2000** | **2001** | **2002** | **2003** | **2004** | **2005** | **2006** | **2007** | **2008** |
 |:-------------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
