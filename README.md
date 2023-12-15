@@ -14,6 +14,7 @@ The package simplifies the process using a set of pre-built assets:
 * pre-built census tables at the block level (decennial) and block group level (5-year American Community Survey) 
 * geographic level crosswalk for nested geographies at the census block and census tract levels 
 
+Preliminary code is currently located in the nccs-geo repository: https://github.com/UI-Research/nccs-geo 
 
 <br>
 <hr>
