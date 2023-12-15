@@ -61,7 +61,7 @@ Data available at the census block or tract levels can be aggregated up to any o
 - Census Regions
 - Census Divisions
 
-The data dictionary describing geolevels is available [HERE](geoid-crosswalk-dd.md). Data was pulled from a variety of sources.
+The data dictionary describing geolevels is available [HERE](https://nccsdata.s3.us-east-1.amazonaws.com/geo/data/census_codebook.xlsx). Data was pulled from a variety of sources.
 
 Note that census blocks are nested within census tracts, so blocks can be converted to any of the geographies listed above. 
 
